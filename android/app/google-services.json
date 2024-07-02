@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "232873952071",
+    "firebase_url": "https://blog-website-3eee7-default-rtdb.firebaseio.com",
+    "project_id": "blog-website-3eee7",
+    "storage_bucket": "blog-website-3eee7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232873952071:android:7efe7350b6c0adc2c28262",
+        "android_client_info": {
+          "package_name": "com.example.theresolutemind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "232873952071-kjfpniuheq1e9hdrdajovb4rb27i4aml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJvhh3Ebw3yK7-JUMs5JRvOflS_cySgMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "232873952071-kjfpniuheq1e9hdrdajovb4rb27i4aml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
