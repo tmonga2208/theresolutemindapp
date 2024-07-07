@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:theresolutemind/auth/auth_service.dart';
+import 'package:theresolutemind/services/auth/auth_service.dart';
 import 'package:theresolutemind/components/my_button.dart';
 import 'package:theresolutemind/components/my_textfield.dart';
 
