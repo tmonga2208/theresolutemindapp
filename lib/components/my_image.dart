@@ -1,69 +1,45 @@
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
-class FirebaseImageProvider extends StatefulWidget {
-  final String basePath;
-  final String uid;
+class ProfileImageWidget extends StatefulWidget {
+  final String userId; // User ID to fetch the image for
 
-  FirebaseImageProvider({
-    required this.basePath,
-    required this.uid,
-  }) : super(key: Key('$basePath/$uid'));
+  const ProfileImageWidget({Key? key, required this.userId}) : super(key: key);
 
   @override
-  State<FirebaseImageProvider> createState() => _FirebaseImageState();
+  _ProfileImageWidgetState createState() => _ProfileImageWidgetState();
 }
 
-class _FirebaseImageState extends State<FirebaseImageProvider> {
-  File? _file;
+class _ProfileImageWidgetState extends State<ProfileImageWidget> {
+  String? _imageUrl;
 
   @override
   void initState() {
-    init();
     super.initState();
+    _getImageUrl();
   }
 
-  Future<void> init() async {
-    final imageFile = await getImageFile();
-    if (mounted) {
+  Future<void> _getImageUrl() async {
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('profileImages/${widget.userId}.png');
+      String downloadUrl = await ref.getDownloadURL();
       setState(() {
-        _file = imageFile;
+        _imageUrl = downloadUrl;
       });
+    } catch (e) {
+      print('Error getting image URL: $e');
     }
-  }
-
-  Future<File?> getImageFile() async {
-    // Construct the full storage path
-    final storagePath = '${widget.basePath}/${widget.uid}';
-    final tempDir = await getTemporaryDirectory();
-    final fileName = storagePath.split('/').last;
-    final file = File('${tempDir.path}/$fileName');
-
-    // If the file does not exist, try to download
-    if (!file.existsSync()) {
-      try {
-        await file.create(recursive: true);
-        await FirebaseStorage.instance.ref(storagePath).writeToFile(file);
-      } catch (e) {
-        // If there is an error, delete the created file
-        await file.delete(recursive: true);
-        return null;
-      }
-    }
-    return file;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_file == null) {
-      return const Icon(Icons.error);
-    }
-    return Image.file(
-      _file!,
-      width: 100,
-      height: 100,
-    );
+    return _imageUrl != null
+        ? CircleAvatar(
+            radius: 20,
+            backgroundImage: NetworkImage(_imageUrl!),
+          )
+        : CircularProgressIndicator();
   }
 }

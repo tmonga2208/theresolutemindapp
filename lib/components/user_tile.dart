@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:theresolutemind/components/my_image.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
+  final String UD;
   final void Function()? onTap;
-  const UserTile({super.key, required this.onTap, required this.text});
+  const UserTile(
+      {super.key, required this.onTap, required this.text, required this.UD});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,11 @@ class UserTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
         padding: const EdgeInsets.all(20),
         child: Row(
-          children: [Icon(Icons.person), const SizedBox(width: 20), Text(text)],
+          children: [
+            ProfileImageWidget(userId: UD),
+            const SizedBox(width: 10),
+            Text(text)
+          ],
         ),
       ),
     );

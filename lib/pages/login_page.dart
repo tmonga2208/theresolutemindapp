@@ -27,63 +27,68 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/images/log.jpg',
-            width: 120,
-            height: 120,
-          ),
-          const SizedBox(height: 50),
-          Text(
-            'Login',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(height: 25),
-          MyTextField(
-              hintText: "Enter Your Email..",
-              obscureText: false,
-              controller: _emailController),
-          const SizedBox(height: 10),
-          MyTextField(
-              hintText: "Enter Your Password..",
-              obscureText: true,
-              controller: _pwController),
-          const SizedBox(height: 10),
-          MyButton(
-            text: "Login",
-            onTap: () => login(context),
-          ),
-          const SizedBox(height: 10),
-          Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 200.0),
+          child: Center(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                'assets/images/log.jpg',
+                width: 120,
+                height: 120,
+              ),
+              const SizedBox(height: 50),
               Text(
-                "Don't have an account?",
+                'Login',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 16,
                 ),
               ),
-              GestureDetector(
-                onTap: onTap,
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontSize: 16,
-                  ),
-                ),
+              const SizedBox(height: 25),
+              MyTextField(
+                  hintText: "Enter Your Email..",
+                  obscureText: false,
+                  controller: _emailController),
+              const SizedBox(height: 10),
+              MyTextField(
+                  hintText: "Enter Your Password..",
+                  obscureText: true,
+                  controller: _pwController),
+              const SizedBox(height: 10),
+              MyButton(
+                text: "Login",
+                onTap: () => login(context),
               ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 16,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: onTap,
+                    child: Text(
+                      "Register",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
-          )
-        ],
-      )),
+          )),
+        ),
+      ),
     );
   }
 }

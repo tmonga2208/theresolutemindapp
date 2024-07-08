@@ -48,6 +48,7 @@ class HomePage extends StatelessWidget {
     String? currentUserEmail = _authService.getCurrentUser()!.email;
     if (currentUserEmail == "kritimonga1407@gmail.com") {
       return UserTile(
+        UD: userData["uid"],
         text: userData["username"],
         onTap: () {
           Navigator.push(
@@ -65,6 +66,7 @@ class HomePage extends StatelessWidget {
     } else {
       if (userData["email"] == "kritimonga1407@gmail.com") {
         return UserTile(
+          UD: userData["uid"],
           text: userData["username"],
           onTap: () {
             Navigator.push(
