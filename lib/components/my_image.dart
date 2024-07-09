@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 
 class ProfileImageWidget extends StatefulWidget {
   final String userId; // User ID to fetch the image for
+  final double radius;
 
-  const ProfileImageWidget({Key? key, required this.userId}) : super(key: key);
+  const ProfileImageWidget(
+      {Key? key, required this.userId, required this.radius})
+      : super(key: key);
 
   @override
   _ProfileImageWidgetState createState() => _ProfileImageWidgetState();
@@ -37,7 +40,7 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
   Widget build(BuildContext context) {
     return _imageUrl != null
         ? CircleAvatar(
-            radius: 20,
+            radius: widget.radius,
             backgroundImage: NetworkImage(_imageUrl!),
           )
         : CircularProgressIndicator();

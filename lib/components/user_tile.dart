@@ -20,7 +20,7 @@ class UserTile extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Row(
           children: [
-            ProfileImageWidget(userId: UD),
+            ProfileImageWidget(userId: UD, radius: 20),
             const SizedBox(width: 10),
             Text(text)
           ],

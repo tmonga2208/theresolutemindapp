@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -29,7 +30,10 @@ class _ProfilePageState extends State<ProfilePage> {
         final ref = FirebaseStorage.instance
             .ref()
             .child('profileImages/${_user!.uid}.png');
-        _imageUrl = await ref.getDownloadURL();
+        String imageUrl = await ref.getDownloadURL();
+        setState(() {
+          _imageUrl = imageUrl; // Update the image URL and refresh UI
+        });
       } catch (e) {
         print('Error getting image URL: $e');
       }
@@ -47,15 +51,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _uploadImage() async {
-    if (_selectedImage != null) {
+    if (_selectedImage != null && _user != null) {
       try {
         final ref = FirebaseStorage.instance
             .ref()
             .child('profileImages/${_user!.uid}.png');
         UploadTask uploadTask = ref.putFile(_selectedImage!);
         TaskSnapshot snapshot = await uploadTask;
-        _imageUrl = await snapshot.ref.getDownloadURL();
-        setState(() {});
+        String imageUrl = await snapshot.ref.getDownloadURL();
+        setState(() {
+          _imageUrl = imageUrl; // Update the image URL and refresh UI
+        });
       } catch (e) {
         print('Error uploading image: $e');
       }
@@ -78,27 +84,30 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 CircleAvatar(
                   radius: 80,
-                  backgroundImage:
-                      _imageUrl != null ? NetworkImage(_imageUrl!) : null,
-                  child: _imageUrl == null ? CircularProgressIndicator() : null,
+                  backgroundImage: _imageUrl != null
+                      ? CachedNetworkImageProvider(_imageUrl!)
+                      : null,
+                  child: _imageUrl == null
+                      ? const CircularProgressIndicator() // Show loading indicator while image is loading
+                      : null,
                 ),
                 IconButton(
                   onPressed: _selectImage,
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Username
             Text(
               _user?.displayName ?? 'No Username',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Upload Button
             ElevatedButton(
               onPressed: _uploadImage,
-              child: Text('Upload Image'),
+              child: const Text('Upload Image'),
             ),
           ],
         ),
